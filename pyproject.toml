@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "discord-media-archive"
+version = "0.1.0"
+description = "Archive Discord media messages to SQLite and local storage"
+requires-python = ">=3.11"
+dependencies = [
+    "discord.py>=2.5,<3",
+    "python-dotenv>=1.0,<2",
+    "sqlalchemy>=2.0,<3",
+]
+
+[tool.setuptools.package-dir]
+"" = "src"
+
+[tool.setuptools.packages.find]
+where = ["src"]
