@@ -2,10 +2,10 @@ from __future__ import annotations
 
 import importlib
 import pkgutil
-from typing import TYPE_CHECKING, cast
+from typing import TYPE_CHECKING
 
-from discord_media_archive.bot.commands.types import CommandModule
 import discord_media_archive.bot.commands as commands_pkg
+from discord_media_archive.bot.commands.types import CommandRegistrar
 
 if TYPE_CHECKING:
     from discord_media_archive.bot.client import ArchiveClient
@@ -14,8 +14,8 @@ if TYPE_CHECKING:
 _SKIP_MODULES = {"registry", "types", "__init__"}
 
 
-def _discover_command_modules() -> list[CommandModule]:
-    discovered: list[CommandModule] = []
+def _discover_command_registrars() -> list[CommandRegistrar]:
+    discovered: list[CommandRegistrar] = []
 
     for module_info in pkgutil.iter_modules(commands_pkg.__path__):
         module_name = module_info.name
@@ -30,15 +30,15 @@ def _discover_command_modules() -> list[CommandModule]:
         if register is None or not callable(register):
             raise RuntimeError(
                 f"Command module '{full_name}' must define "
-                f"callable register_command(client)"
+                "callable register_command(client)"
             )
 
-        discovered.append(cast(CommandModule, module))
+        discovered.append(register)
 
-    discovered.sort(key=lambda m: m.__name__)
+    discovered.sort(key=lambda register: register.__module__)
     return discovered
 
 
 def register_commands(client: ArchiveClient) -> None:
-    for module in _discover_command_modules():
-        module.register_command(client)
+    for register in _discover_command_registrars():
+        register(client)

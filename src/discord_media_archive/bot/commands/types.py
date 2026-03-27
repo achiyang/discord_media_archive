@@ -1,11 +1,11 @@
 from __future__ import annotations
 
-from typing import Protocol, TYPE_CHECKING
+from typing import TYPE_CHECKING, Protocol
 
 if TYPE_CHECKING:
     from discord_media_archive.bot.client import ArchiveClient
 
 
-class CommandModule(Protocol):
-    def register_command(self, client: ArchiveClient) -> None:
+class CommandRegistrar(Protocol):
+    def __call__(self, client: ArchiveClient) -> None:
         ...
