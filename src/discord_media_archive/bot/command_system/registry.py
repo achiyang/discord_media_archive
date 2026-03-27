@@ -5,13 +5,10 @@ import pkgutil
 from typing import TYPE_CHECKING
 
 import discord_media_archive.bot.commands as commands_pkg
-from discord_media_archive.bot.commands.types import CommandRegistrar
+from discord_media_archive.bot.command_system.types import CommandRegistrar
 
 if TYPE_CHECKING:
     from discord_media_archive.bot.client import ArchiveClient
-
-
-_SKIP_MODULES = {"registry", "types", "__init__"}
 
 
 def _discover_command_registrars() -> list[CommandRegistrar]:
@@ -20,7 +17,7 @@ def _discover_command_registrars() -> list[CommandRegistrar]:
     for module_info in pkgutil.iter_modules(commands_pkg.__path__):
         module_name = module_info.name
 
-        if module_name.startswith("_") or module_name in _SKIP_MODULES:
+        if module_name.startswith("_"):
             continue
 
         full_name = f"{commands_pkg.__name__}.{module_name}"

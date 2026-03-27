@@ -3,7 +3,7 @@ from __future__ import annotations
 import discord
 
 from discord_media_archive.bot.client import ArchiveClient
-from discord_media_archive.bot.commands.checks import admin_only
+from discord_media_archive.bot.command_system.checks import admin_only
 from discord_media_archive.bot.logger import log
 
 
