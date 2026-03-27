@@ -7,7 +7,7 @@ import discord
 from discord_media_archive.config import Settings
 from discord_media_archive.db import commit_batch, upsert_channel_checkpoint
 from discord_media_archive.bot.backfill import run_startup_backfill
-from discord_media_archive.bot.commands.resistry import register_commands
+from discord_media_archive.bot.commands.registry import register_commands
 from discord_media_archive.bot.logger import log
 from discord_media_archive.bot.message_handler import process_message
 

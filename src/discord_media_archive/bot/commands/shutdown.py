@@ -1,17 +1,12 @@
 from __future__ import annotations
 
-from discord_media_archive.bot.logger import log
-
 import discord
-from typing import TYPE_CHECKING
 
-if TYPE_CHECKING:
-    from discord_media_archive.bot.client import ArchiveClient
+from discord_media_archive.bot.logger import log
+from discord_media_archive.bot.client import ArchiveClient
 
 
-def register_command(
-    client: ArchiveClient,
-) -> None:
+def register_command(client: ArchiveClient) -> None:
     guild_obj = discord.Object(id=client.settings.target_guild_id)
 
     @client.tree.command(
@@ -38,6 +33,5 @@ def register_command(
             "봇을 종료합니다.",
             ephemeral=True,
         )
-
         await log(client, f"shutdown requested by user_id={interaction.user.id}")
         await client.close()
