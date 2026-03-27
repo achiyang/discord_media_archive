@@ -15,13 +15,6 @@ def register_command(client: ArchiveClient) -> None:
         guild=guild_obj,
     )
     async def ping_command(interaction: discord.Interaction) -> None:
-        if interaction.guild_id != client.settings.target_guild_id:
-            await interaction.response.send_message(
-                "대상 길드에서만 사용할 수 있습니다.",
-                ephemeral=True,
-            )
-            return
-
         latency_ms = round(client.latency * 1000, 2)
 
         await interaction.response.send_message(

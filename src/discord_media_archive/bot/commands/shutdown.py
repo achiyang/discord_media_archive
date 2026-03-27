@@ -2,8 +2,9 @@ from __future__ import annotations
 
 import discord
 
-from discord_media_archive.bot.logger import log
 from discord_media_archive.bot.client import ArchiveClient
+from discord_media_archive.bot.commands.checks import admin_only
+from discord_media_archive.bot.logger import log
 
 
 def register_command(client: ArchiveClient) -> None:
@@ -14,21 +15,8 @@ def register_command(client: ArchiveClient) -> None:
         description="봇을 종료합니다.",
         guild=guild_obj,
     )
+    @admin_only(client)
     async def shutdown_command(interaction: discord.Interaction) -> None:
-        if interaction.guild_id != client.settings.target_guild_id:
-            await interaction.response.send_message(
-                "대상 길드에서만 사용할 수 있습니다.",
-                ephemeral=True,
-            )
-            return
-
-        if interaction.user.id != client.settings.admin_user_id:
-            await interaction.response.send_message(
-                "이 명령어를 사용할 권한이 없습니다.",
-                ephemeral=True,
-            )
-            return
-
         await interaction.response.send_message(
             "봇을 종료합니다.",
             ephemeral=True,
