@@ -38,11 +38,14 @@ async def run_startup_backfill(client: ArchiveClient) -> None:
                     after_message_id = get_channel_checkpoint_message_id(session, channel.id)
 
                     if after_message_id is None:
-                        await log(client, f"[resume] channel={channel.name} checkpoint=None (full scan)")
+                        await log(
+                            client,
+                            f"[resume] https://discord.com/channels/{guild.id}/{channel.id} checkpoint=None (full scan)",
+                        )
                     else:
                         await log(
                             client,
-                            f"[resume] channel={channel.name} checkpoint={after_message_id}",
+                            f"[resume] https://discord.com/channels/{guild.id}/{channel.id}/{after_message_id}",
                         )
 
                     message_count, media_count = await backfill_channel(
@@ -56,7 +59,7 @@ async def run_startup_backfill(client: ArchiveClient) -> None:
 
                     await log(
                         client,
-                        f"[done] channel={channel.name} "
+                        f"[done] https://discord.com/channels/{guild.id}/{channel.id} "
                         f"saved_messages={message_count} "
                         f"saved_media={media_count}",
                     )
@@ -66,7 +69,7 @@ async def run_startup_backfill(client: ArchiveClient) -> None:
                     await log(
                         client,
                         f"[channel-backfill-error] "
-                        f"channel={channel.name} "
+                        f"https://discord.com/channels/{guild.id}/{channel.id} "
                         f"channel_id={channel.id} "
                         f"error_type={type(exc).__name__} "
                         f"error={exc!r}",
