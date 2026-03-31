@@ -68,6 +68,6 @@ class ArchiveClient(discord.Client):
                 commit_batch(session)
                 await log(
                     self,
-                    f"[live] channel={getattr(message.channel, 'name', message.channel.id)} "
-                    f"message_id={message.id} saved_messages={message_delta} saved_media={media_delta}",
+                    f"[live] https://discord.com/channels/{message.guild.id}/{message.channel.id}/{message.id} "
+                    f"saved_messages={message_delta} saved_media={media_delta}",
                 )
